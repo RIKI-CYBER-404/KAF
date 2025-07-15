@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>SHARK ANIL KAF - Coffee Shop</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body { font-family: Arial, sans-serif; margin:0; padding:0; background:#f9f9f9; }
+    header, footer { background:#2c3e50; color:#fff; text-align:center; padding:20px; }
+    header .logo { font-size: 2rem; font-weight: bold; }
+    nav { margin-top: 10px; }
+    nav a { color:#fff; margin: 0 15px; text-decoration:none; font-weight: 600; }
+    nav a:hover { text-decoration: underline; }
+    main { max-width: 900px; margin: 20px auto; padding: 0 15px; }
+    .products { display: grid; grid-template-columns: repeat(auto-fit,minmax(240px,1fr)); gap: 20px; margin-bottom: 30px; }
+    .product { background:#fff; padding: 15px; border-radius: 8px; box-shadow: 0 2px 6px rgb(0 0 0 / 0.1); text-align:center; }
+    .product img { max-width: 100%; height: 160px; object-fit: cover; border-radius: 6px; }
+    .product h3 { margin: 12px 0 6px; }
+    .product p.price { font-weight: bold; color:#27ae60; margin-bottom: 10px; }
+    .product button { background:#27ae60; color:#fff; border:none; padding: 10px 15px; border-radius: 5px; cursor:pointer; font-weight: 600; }
+    .product button:hover { background:#219150; }
+    
+    section.cart { background:#fff; padding:20px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); margin-bottom: 30px; }
+    section.cart h2 { margin-top: 0; }
+    #cartItems p { margin: 8px 0; display: flex; justify-content: space-between; align-items: center; }
+    #cartItems p button { background:#e74c3c; border:none; color:#fff; border-radius: 4px; cursor:pointer; padding: 2px 6px; }
+    #cartItems p button:hover { background:#c0392b; }
+    
+    form.order-form { background:#fff; padding:20px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+    form.order-form h2 { margin-top: 0; margin-bottom: 15px; }
+    form.order-form label { display: block; margin-bottom: 6px; font-weight: 600; }
+    form.order-form input, form.order-form select, form.order-form textarea {
+      width: 100%; padding: 8px; margin-bottom: 15px; border-radius: 5px; border: 1px solid #ccc; font-size: 1rem;
+    }
+    form.order-form button {
+      background:#2980b9; color:#fff; border:none; padding: 12px 20px; border-radius: 6px; font-weight: 700; cursor:pointer;
+    }
+    form.order-form button:hover { background:#1c5980; }
+
+    footer p { margin: 0; font-size: 0.9rem; }
+
+    @media (max-width: 600px) {
+      nav a { display: block; margin: 8px 0; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo"> SHARK ANIL KAF</div>
+  <nav>
+    <a href="#products">Products</a>
+    <a href="#cart">Cart</a>
+    <a href="#order">Order</a>
+  </nav>
+</header>
+
+<main>
+
+  <section id="products" class="products">
+    <!-- Coffee products -->
+    <div class="product">
+      <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=400&q=80" alt="Espresso" />
+      <h3>Espresso</h3>
+      <p class="price">12 SAR</p>
+      <button onclick="addToCart('Espresso', 12)">Add to Cart</button>
+    </div>
+    <div class="product">
+      <img src="https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&w=400&q=80" alt="Latte" />
+      <h3>Latte</h3>
+      <p class="price">15 SAR</p>
+      <button onclick="addToCart('Latte', 15)">Add to Cart</button>
+    </div>
+    <div class="product">
+      <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=400&q=80" alt="Cappuccino" />
+      <h3>Cappuccino</h3>
+      <p class="price">14 SAR</p>
+      <button onclick="addToCart('Cappuccino', 14)">Add to Cart</button>
+    </div>
+    <div class="product">
+      <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=400&q=80" alt="Americano" />
+      <h3>Americano</h3>
+      <p class="price">13 SAR</p>
+      <button onclick="addToCart('Americano', 13)">Add to Cart</button>
+    </div>
+    <div class="product">
+      <img src="https://images.unsplash.com/photo-1498804103079-a6351b050096?auto=format&fit=crop&w=400&q=80" alt="Mocha" />
+      <h3>Mocha</h3>
+      <p class="price">16 SAR</p>
+      <button onclick="addToCart('Mocha', 16)">Add to Cart</button>
+    </div>
+    <div class="product">
+      <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=400&q=80" alt="Macchiato" />
+      <h3>Macchiato</h3>
+      <p class="price">14 SAR</p>
+      <button onclick="addToCart('Macchiato', 14)">Add to Cart</button>
+    </div>
+  </section>
+
+  <section id="cart" class="cart">
+    <h2> Your Cart</h2>
+    <div id="cartItems">Cart is empty.</div>
+    <h3>Total: <span id="total">0</span> SAR</h3>
+  </section>
+
+  <section id="order" class="order-section">
+    <form id="orderForm" class="order-form">
+      <h2>Place Your Order</h2>
+      
+      <label for="name">Full Name</label>
+      <input type="text" id="name" name="name" placeholder="Your full name" required />
+
+      <label for="phone">Phone Number</label>
+      <input type="tel" id="phone" name="phone" placeholder="+966 5XXXXXXXX" required pattern="^\+966\s?5\d{8}$" />
+
+      <label for="address">Delivery Address</label>
+      <textarea id="address" name="address" rows="3" placeholder="Street, City, Postal Code" required></textarea>
+
+      <label for="payment">Payment Method</label>
+      <select id="payment" name="payment" required>
+        <option value="" disabled selected>Select a payment method</option>
+        <option value="cash">Cash on Delivery</option>
+        <option value="bank">Bank Transfer (Saudi Arabia Banks)</option>
+        <option value="stcpay">STC Pay</option>
+      </select>
+
+      <div id="paymentInstructions" style="background:#f0f0f0; padding:10px; border-radius: 5px; margin-bottom: 15px; display:none;"></div>
+
+      <button type="submit">Submit Order</button>
+    </form>
+  </section>
+
+</main>
+
+<footer>
+  <p>© 2025 SHARK ANIL KAF - All rights reserved.</p>
+</footer>
+
+<script>
+  // Cart management
+  function addToCart(name, price) {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    cart.push({ name, price });
+    localStorage.setItem('cart', JSON.stringify(cart));
+    showCart();
+  }
+
+  function showCart() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const cartItems = document.getElementById('cartItems');
+    const totalSpan = document.getElementById('total');
+    if(cart.length === 0) {
+      cartItems.innerHTML = 'Cart is empty.';
+      totalSpan.textContent = '0';
+      return;
+    }
+    let total = 0;
+    cartItems.innerHTML = '';
+    cart.forEach((item, index) => {
+      total += item.price;
+      const p = document.createElement('p');
+      p.innerHTML = `${item.name} - ${item.price} SAR <button onclick="removeFromCart(${index})">Remove</button>`;
+      cartItems.appendChild(p);
+    });
+    totalSpan.textContent = total.toFixed(2);
+  }
+
+  function removeFromCart(index) {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    cart.splice(index, 1);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    showCart();
+  }
+
+  // Payment method instructions
+  const paymentSelect = document.getElementById('payment');
+  const paymentInstructions = document.getElementById('paymentInstructions');
+
+  paymentSelect.addEventListener('change', () => {
+    const val = paymentSelect.value;
+    if(val === 'cash') {
+      paymentInstructions.style.display = 'block';
+      paymentInstructions.textContent = 'You will pay cash upon delivery.';
+    } else if(val === 'bank') {
+      paymentInstructions.style.display = 'block';
+      paymentInstructions.innerHTML = `
+        Please transfer the total amount to one of our Saudi bank accounts:<br/>
+        <ul>
+          <li>Al Rajhi Bank: 1234 5678 9012 3456</li>
+          <li>National Commercial Bank: 6543 2109 8765 4321</li>
+        </ul>
+        After payment, please keep the transaction receipt.
+      `;
+    } else if(val === 'stcpay') {
+      paymentInstructions.style.display = 'block';
+      paymentInstructions.innerHTML = `
+        Use STC Pay app to send your payment to:<br/>
+        <strong>+966 500 123 456</strong><br/>
+        Once paid, please keep the receipt or screenshot.
+      `;
+    } else {
+      paymentInstructions.style.display = 'none';
+      paymentInstructions.textContent = '';
+    }
+  });
+
+  // Order form submit
+  document.getElementById('orderForm').addEventListener('submit', e => {
+    e.preventDefault();
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    if(cart.length === 0) {
+      alert('Your cart is empty. Please add products before ordering.');
+      return;
+    }
+
+    const name = e.target.name.value.trim();
+    const phone = e.target.phone.value.trim();
+    const address = e.target.address.value.trim();
+    const paymentMethod = e.target.payment.value;
+
+    // Normally here you send the order to backend/server or Firebase etc.
+
+    // For demo, just alert summary and clear cart
+    let total = cart.reduce((acc, item) => acc + item.price, 0);
+
+    alert(
+      `Thank you, ${name}!\n\nOrder Summary:\n` +
+      cart.map(item => `- ${item.name}: ${item.price} SAR`).join('\n') +
+      `\n\nTotal: ${total.toFixed(2)} SAR\n` +
+      `Payment Method: ${paymentMethod === 'cash' ? 'Cash on Delivery' : paymentMethod === 'bank' ? 'Bank Transfer' : 'STC Pay'}\n\n` +
+      `Delivery Address:\n${address}\n\nWe will contact you shortly!`
+    );
+
+    localStorage.removeItem('cart');
+    showCart();
+    e.target.reset();
+    paymentInstructions.style.display = 'none';
+  });
+
+  window.onload = showCart;
+</script>
+
+</body>
+</html>
